@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Locais de Provas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciar Locais de Provas</h1>
+        <form id="local-form">
+            <label for="nome-local">Nome do Local:</label>
+            <input type="text" id="nome-local" required>
+
+            <label for="numero-sala">Número da Sala:</label>
+            <input type="text" id="numero-sala" required>
+
+            <label for="curso-candidato">Curso do Candidato:</label>
+            <input type="text" id="curso-candidato" required>
+
+            <button type="submit">Adicionar Local de Prova</button>
+        </form>
+        <table id="locais-table">
+            <thead>
+                <tr>
+                    <th>Nome do Local</th>
+                    <th>Número da Sala</th>
+                    <th>Curso do Candidato</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="gerenciar-locais.js"></script>
+</body>
+</html>
