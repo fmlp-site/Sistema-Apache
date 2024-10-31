@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // Realizar uma solicitação para buscar os dados do candidato no RestDB.io
-    const response = await fetch(`https://YOUR_RESTDB_URL/rest/YOUR_COLLECTION_NAME?q={"id":"${idCandidato}"}`, {
+    const response = await fetch(`https://vestibular-ccd4.restdb.io/rest/inscricoes?max=2?q={"id":"${idCandidato}"}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'apikey': 'YOUR_API_KEY' // Substitua pela sua chave de API
+            'apikey': '6720196ed0ee287fb492c579' // Substitua pela sua chave de API
         }
     });
 
