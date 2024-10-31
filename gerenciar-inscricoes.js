@@ -1,65 +1,99 @@
-const RESTDB_API_KEY = '6720196ed0ee287fb492c579'; // Substitua pela sua chave de API do RestDB
-const RESTDB_URL = 'https://vestibular-ccd4.restdb.io/rest/inscricoes?max=2'; // URL do seu banco de dados
+const apiKey = '6720196ed0ee287fb492c579';
+const inscricoesUrl = 'https://vestibular-ccd4.restdb.io/rest/inscricoes?max=2';
+const locaisUrl = 'https://vestibular-ccd4.restdb.io/rest/locais';
 
+// Função para buscar inscrições
 async function fetchInscricoes() {
-    const response = await fetch(RESTDB_URL, {
-        method: 'GET',
+    const response = await fetch(inscricoesUrl, {
         headers: {
             'Content-Type': 'application/json',
-            'x-api-key': RESTDB_API_KEY,
-        },
+            'x-apikey': apiKey
+        }
     });
-    const inscricoes = await response.json();
-    return inscricoes;
+    const data = await response.json();
+    displayInscricoes(data);
 }
 
-async function displayInscricoes() {
-    const inscricoes = await fetchInscricoes();
-    const tableBody = document.querySelector('#inscricoes-table tbody');
-    
+// Função para exibir inscrições na tabela
+function displayInscricoes(inscricoes) {
+    const tbody = document.querySelector('#inscricoes-table tbody');
+    tbody.innerHTML = '';
     inscricoes.forEach(inscricao => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${inscricao.nome}</td>
             <td>${inscricao._id}</td>
-            <td>${inscricao.status}</td>
             <td>
-                <button onclick="editInscricao('${inscricao._id}')">Editar</button>
+                <select onchange="updateStatus('${inscricao._id}', this.value)">
+                    <option value="Homologada" ${inscricao.status === 'Homologada' ? 'selected' : ''}>Homologada</option>
+                    <option value="Não Homologada" ${inscricao.status === 'Não Homologada' ? 'selected' : ''}>Não Homologada</option>
+                    <option value="Aguardando" ${inscricao.status === 'Aguardando' ? 'selected' : ''}>Aguardando</option>
+                </select>
+            </td>
+            <td>
+                <select onchange="alocarLocal('${inscricao._id}', this.value)">
+                    <option value="">Selecionar Local</option>
+                    ${localOptions().join('')}
+                </select>
+            </td>
+            <td>
                 <button onclick="deleteInscricao('${inscricao._id}')">Excluir</button>
             </td>
         `;
-        tableBody.appendChild(row);
+        tbody.appendChild(row);
     });
 }
 
-async function editInscricao(id) {
-    const status = prompt("Digite o novo status para a inscrição:");
-    if (status) {
-        await fetch(`${RESTDB_URL}/${id}`, {
-            method: 'PATCH',
+// Função para criar opções de locais
+async function localOptions() {
+    const response = await fetch(locaisUrl, {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-apikey': apiKey
+        }
+    });
+    const locais = await response.json();
+    return locais.map(local => `<option value="${local._id}">${local.nome} - Sala ${local.numero_sala}</option>`);
+}
+
+// Função para atualizar o status da inscrição
+async function updateStatus(id, status) {
+    await fetch(`${inscricoesUrl}/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-apikey': apiKey
+        },
+        body: JSON.stringify({ status })
+    });
+    fetchInscricoes(); // Atualiza a lista após a alteração
+}
+
+// Função para alocar um local de prova
+async function alocarLocal(id, localId) {
+    if (localId) {
+        await fetch(`${inscricoesUrl}/${id}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'x-api-key': RESTDB_API_KEY,
+                'x-apikey': apiKey
             },
-            body: JSON.stringify({ status }),
+            body: JSON.stringify({ local_prova: localId })
         });
-        location.reload();
+        fetchInscricoes(); // Atualiza a lista após a alocação
     }
 }
 
+// Função para excluir uma inscrição
 async function deleteInscricao(id) {
-    const confirmDelete = confirm("Tem certeza que deseja excluir esta inscrição?");
-    if (confirmDelete) {
-        await fetch(`${RESTDB_URL}/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': RESTDB_API_KEY,
-            },
-        });
-        location.reload();
-    }
+    await fetch(`${inscricoesUrl}/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'x-apikey': apiKey
+        }
+    });
+    fetchInscricoes(); // Atualiza a lista após a exclusão
 }
 
-// Chama a função para exibir inscrições ao carregar a página
-displayInscricoes();
+// Inicializa a página
+fetchInscricoes();
