@@ -1,28 +1,30 @@
-<!-- gerenciar-inscricoes.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Gerenciar Inscrições</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Gerenciar Inscrições</h1>
-        <table id="inscricoes-table">
+        <table id="inscricao-table">
             <thead>
                 <tr>
-                    <th>Nome</th>
                     <th>ID</th>
+                    <th>Nome</th>
                     <th>Status</th>
-                    <th>Local de Prova</th>
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody id="inscricao-body">
+                <!-- Inscrições serão carregadas aqui -->
+            </tbody>
         </table>
     </div>
-    <script src="gerenciar-inscricoes.js"></script>
+
+    <script src="gerenciar-inscricao.js"></script>
 </body>
 </html>
