@@ -22,11 +22,11 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
     };
 
     // Enviar os dados para o RestDB.io
-    const response = await fetch('https://YOUR_RESTDB_URL/rest/YOUR_COLLECTION_NAME', {
+    const response = await fetch('https://vestibular-ccd4.restdb.io/rest/inscricoes?max=2', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'apikey': 'YOUR_API_KEY' // Coloque sua chave de API aqui
+            'apikey': '6720196ed0ee287fb492c579' // Coloque sua chave de API aqui
         },
         body: JSON.stringify(data)
     });
