@@ -1,32 +1,25 @@
+<!-- gerenciar-locais.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Locais de Provas</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Gerenciar Locais de Prova</title>
 </head>
 <body>
     <div class="container">
-        <h1>Gerenciar Locais de Provas</h1>
-        <form id="local-form">
-            <label for="nome-local">Nome do Local:</label>
-            <input type="text" id="nome-local" required>
-
-            <label for="numero-sala">Número da Sala:</label>
-            <input type="text" id="numero-sala" required>
-
-            <label for="curso-candidato">Curso do Candidato:</label>
-            <input type="text" id="curso-candidato" required>
-
-            <button type="submit">Adicionar Local de Prova</button>
+        <h1>Gerenciar Locais de Prova</h1>
+        <form id="local-form" onsubmit="addLocal(event)">
+            <input type="text" id="local-nome" placeholder="Nome do Local" required>
+            <input type="text" id="numero-sala" placeholder="Número da Sala" required>
+            <button type="submit">Adicionar Local</button>
         </form>
         <table id="locais-table">
             <thead>
                 <tr>
-                    <th>Nome do Local</th>
+                    <th>Nome</th>
                     <th>Número da Sala</th>
-                    <th>Curso do Candidato</th>
                     <th>Ações</th>
                 </tr>
             </thead>
