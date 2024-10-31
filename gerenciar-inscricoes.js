@@ -1,4 +1,4 @@
-const API_URL = 'https://vestibular-ccd4.restdb.io/rest/inscricoes?max=2'; // Substitua pelo seu ID do RestDB
+const API_URL = 'https://vestibular-ccd4.restdb.io/rest/inscricoes'; // Substitua pelo seu ID do RestDB
 const API_KEY = '6720196ed0ee287fb492c579'; // Substitua pela sua chave de API do RestDB
 
 async function fetchInscricoes() {
