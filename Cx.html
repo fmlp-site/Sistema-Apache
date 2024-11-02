@@ -1,0 +1,49 @@
+<!-- Formulário de Cadastro -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+<body>
+    <h2>Cadastro</h2>
+    <form id="cadastroForm">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="role">Tipo de Usuário:</label>
+        <select id="role" name="role" required>
+            <option value="admin">Administrador</option>
+            <option value="candidato">Candidato</option>
+        </select><br>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+        document.getElementById('cadastroForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            // Enviar dados para o banco de dados
+            await fetch('https://your-db-id.restdb.io/rest/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-apikey': 'your-api-key'
+                },
+                body: JSON.stringify({ username, password, role })
+            });
+
+            // Redirecionar para a página de login
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
